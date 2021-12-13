@@ -2,7 +2,8 @@ FROM nvidia/cuda:11.1.1-devel AS builder
 
 RUN apt-get update && apt-get install -y \
     build-essential \
-    curl
+    curl \
+    lsb-release
     
 # Setup CMake (KitWare) PPA
 RUN curl https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
@@ -18,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     # cmake-data=3.19.5-0kitware1 \
     && rm -rf /var/lib/apt/lists/*
 
+ENV LD_LIBRARY_PATH="/usr/local/cuda-11.1/compat/:/usr/local/cuda-11.1/targets/x86_64-linux/lib/stubs/:$LD_LIBRARY_PATH"
 
 WORKDIR /src
 COPY . /src/

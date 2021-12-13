@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.18)
 
 if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
-  set(CMAKE_CUDA_ARCHITECTURES 30)
+  set(CMAKE_CUDA_ARCHITECTURES 80)
 endif()
 
 project(cuda_memtest LANGUAGES CUDA CXX)
 
 find_package(Threads REQUIRED)
+find_package(CUDAToolkit REQUIRED)
+
+message(STATUS "HELLPOOOOOOOOOO")
+message(STATUS ${CUDA_INCLUDE_DIRS})
+message(STATUS ${CUDA_TOOLKIT_INCLUDE})
 # list(APPEND LIBS ${CMAKE_THREAD_LIBS_INIT})
 
 # if(NOT CMAKE_THREAD_LIBS_INIT)
@@ -17,10 +22,10 @@ find_package(Threads REQUIRED)
 
 add_executable(gpu_burn
     compare.cu
-    gpu_brun-drv.cpp
+    gpu_burn-drv.cpp
 )
 
 # target_link_libraries(cuda_memtest STATIC cuda ${LIBS})
-target_link_libraries(gpu_burn STATIC ${CUDA_LIBRARIES} ${CUDA_CUBLAS_LIBRARIES})
-
+# target_link_libraries(gpu_burn STATIC cuda ${CUDA_LIBRARIES} ${CUDA_CUBLAS_LIBRARIES})
+target_link_libraries(gpu_burn CUDA::cudart_static CUDA::cuda_driver CUDA::cublas_static CUDA::cublasLt_static)
 # install(TARGETS cuda_memtest RUNTIME DESTINATION bin)
