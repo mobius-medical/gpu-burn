@@ -9,9 +9,6 @@ project(cuda_memtest LANGUAGES CUDA CXX)
 find_package(Threads REQUIRED)
 find_package(CUDAToolkit REQUIRED)
 
-message(STATUS "HELLPOOOOOOOOOO")
-message(STATUS ${CUDA_INCLUDE_DIRS})
-message(STATUS ${CUDA_TOOLKIT_INCLUDE})
 # list(APPEND LIBS ${CMAKE_THREAD_LIBS_INIT})
 
 # if(NOT CMAKE_THREAD_LIBS_INIT)
