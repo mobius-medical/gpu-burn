@@ -15,6 +15,7 @@ LDFLAGS  += -L${CUDAPATH}/lib
 LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib64
 LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib
 LDFLAGS  += -lcublas_static
+# Required for newer CUDA versions in the future: LDFLAGS  += -lcublasLt_static
 LDFLAGS  += -lcudart_static
 LDFLAGS  += -lculibos
 LDFLAGS  += -ldl
