@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.1.1-devel AS build-stage
+FROM nvidia/cuda:10.0-devel-ubuntu16.04 AS build-stage
 
 WORKDIR /build
 COPY . /build/

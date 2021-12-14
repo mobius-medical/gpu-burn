@@ -14,8 +14,12 @@ LDFLAGS  += -L${CUDAPATH}/lib64
 LDFLAGS  += -L${CUDAPATH}/lib
 LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib64
 LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib
-LDFLAGS  += -lcublas
-LDFLAGS  += -lcudart
+LDFLAGS  += -lcublas_static
+LDFLAGS  += -lcudart_static
+LDFLAGS  += -lculibos
+LDFLAGS  += -ldl
+LDFLAGS  += -pthread
+LDFLAGS  += -lrt
 
 COMPUTE   ?= 50
 
