@@ -1,21 +1,18 @@
-FROM nvidia/cuda:10.0-devel-ubuntu16.04 AS build-stage
+ARG CUDA_VERSION=10.0
+ARG UBUNTU_VERSION=16.04
+FROM nvidia/cuda:${CUDA_VERSION}-devel-ubuntu${UBUNTU_VERSION} AS build-stage
 
 WORKDIR /build
 COPY . /build/
 RUN make
 
-RUN mkdir /build/libs
-RUN ldd ./gpu_burn | grep "=> /" | awk '{print $3}' | xargs -I '{}' cp -v '{}' /build/libs
-
 
 FROM scratch as export-stage
 COPY --from=build-stage /build/gpu_burn /
 COPY --from=build-stage /build/compare.ptx /
-COPY --from=build-stage /build/run_gpu_burn /
-COPY --from=build-stage /build/libs /libs
 
 
-FROM nvidia/cuda:11.1.1-runtime
+FROM nvidia/cuda:${CUDA_VERSION}-runtime-ubuntu${UBUNTU_VERSION}
 COPY --from=artifact / /app/
 WORKDIR /app
 CMD ["./gpu_burn", "60"]
