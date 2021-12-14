@@ -1,4 +1,5 @@
-FROM nvidia/cuda:11.1.1-devel AS builder
+FROM nvidia/cuda:9.1-devel-ubuntu16.04 AS builder
+# FROM nvidia/cuda:11.1.1-devel AS builder
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -25,13 +26,14 @@ COPY . /src/
 WORKDIR /build/
 RUN cmake ../src
 RUN cmake --build .
-
+# RUN nvcc ../src/t1752.cu -o t1752 -lcublas_static -lcublasLt_static -lculibos
+RUN nvcc ../src/t1752.cu -o t1752 -lcublas_static -lculibos
 
 
 FROM scratch as artifact
 COPY --from=builder /build/gpu_burn /
-
-
+COPY --from=builder /build/CMakeFiles/compare.ptx.dir/compare.ptx /
+COPY --from=builder /build/t1752 /
 
 FROM nvidia/cuda:11.1.1-runtime
 COPY --from=artifact / /app/

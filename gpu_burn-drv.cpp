@@ -129,17 +129,20 @@ template <class T> class GPU_Test {
 	public:
 	GPU_Test(int dev, bool doubles, bool tensors) : 
 			d_devNumber(dev), d_doubles(doubles), d_tensors(tensors) {
+		printf("cuDeviceGet\n");
 		checkError(cuDeviceGet(&d_dev, d_devNumber));
+		printf("cuCtxCreate\n");
 		checkError(cuCtxCreate(&d_ctx, 0, d_dev));
 
 		bind();
 
 		//checkError(cublasInit());
+		printf("cublasCreate\n");
 		checkError(cublasCreate(&d_cublas), "init");
 
 		if(d_tensors)
 			checkError(cublasSetMathMode(d_cublas, CUBLAS_TENSOR_OP_MATH));
-
+		printf("cuMemAllocHost\n");
 		checkError(cuMemAllocHost((void**)&d_faultyElemsHost, sizeof(int)));
 		d_error = 0;
 
