@@ -13,6 +13,6 @@ COPY --from=build-stage /build/compare.ptx /
 
 
 FROM nvidia/cuda:${CUDA_VERSION}-runtime-ubuntu${UBUNTU_VERSION}
-COPY --from=artifact / /app/
+COPY --from=export-stage / /app/
 WORKDIR /app
 CMD ["./gpu_burn", "60"]
