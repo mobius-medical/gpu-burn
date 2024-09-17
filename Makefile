@@ -23,8 +23,16 @@ override LDFLAGS  += -L${CUDAPATH}/lib
 override LDFLAGS  += -L${CUDAPATH}/lib/stubs
 override LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib64
 override LDFLAGS  += -Wl,-rpath=${CUDAPATH}/lib
-override LDFLAGS  += -lcublas
-override LDFLAGS  += -lcudart
+# override LDFLAGS  += -lcublas
+# override LDFLAGS  += -lcudart
+# Static linking
+override LDFLAGS  += -lcublas_static
+override LDFLAGS  += -lcublasLt_static
+override LDFLAGS  += -lcudart_static
+override LDFLAGS  += -lculibos
+override LDFLAGS  += -ldl
+override LDFLAGS  += -pthread
+override LDFLAGS  += -lrt
 
 COMPUTE      ?= 50
 CUDA_VERSION ?= 11.8.0
